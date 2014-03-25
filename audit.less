@@ -1,0 +1,20 @@
+.about(@val) when (isnumber(@val)) {
+    width: @val;
+    height: @val;
+    background-color: #ccc;
+}
+.about(@val) when (iscolor(@val)) {
+    background-color: @val;
+}
+.about(@val) when (isstring(@val)) {
+    content: @val;
+}
+.about(@val) when (iskeyword(@val)) {
+    content: @val;
+}
+.about(@val) when (isurl(@val)) {
+    content: @val;
+}
+.about(@val) when (default()) {
+    content: @val;
+}
