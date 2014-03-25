@@ -87,7 +87,6 @@ var loadConfig = function(configFile){
   configFile = configFile || 'config.json';
 
   configData = fs.readFileSync(configFile, {'encoding': 'utf8'});
-  console.log(configData)
   return JSON.parse(configData);
 }
 
@@ -101,14 +100,16 @@ var lessVarsAsJSON = function() {
     })
     .then(function(css){
       // turns css-pseudo-json into actual json
-      var splitsie = css.split('{')[1];
-      splitsie = splitsie.split('}')[0];
-      splitsie = splitsie.trim();
-      splitsie = splitsie.split('\n');
+      var op = css.indexOf('{');
+      var cp = css.indexOf('}');
+      var notBlock = css
+        .substring(op+1, cp)
+        .trim()
+        .split('\n');
 
       out = {}
-      for (var i=0; i<splitsie.length; i+=1){
-        var s = splitsie[i].split(':');
+      for (var i=0; i<notBlock.length; i+=1){
+        var s = notBlock[i].split(':');
         var k = s[0].trim();
         var v = s[1].split(';')[0].trim();
         out[k] = v;
